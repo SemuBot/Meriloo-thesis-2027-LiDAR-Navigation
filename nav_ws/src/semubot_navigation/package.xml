@@ -1,5 +1,21 @@
-<exec_depend>slam_toolbox</exec_depend>
-<exec_depend>odom_to_tf_ros2</exec_depend>
-<exec_depend>sllidar_ros2</exec_depend>
-<exec_depend>tf2_ros</exec_depend>
-<exec_depend>semubot_bringup</exec_depend>
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>semubot_navigation</name>
+  <version>0.0.1</version>
+  <description>SemuBot lidar, SLAM and navigation launch files and config</description>
+  <maintainer email="andreas.meriloo@gmail.com">semubot</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>slam_toolbox</exec_depend>
+  <exec_depend>odom_to_tf_ros2</exec_depend>
+  <exec_depend>sllidar_ros2</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>semubot_bringup</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
