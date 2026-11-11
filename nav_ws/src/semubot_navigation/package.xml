@@ -1,0 +1,5 @@
+<exec_depend>slam_toolbox</exec_depend>
+<exec_depend>odom_to_tf_ros2</exec_depend>
+<exec_depend>sllidar_ros2</exec_depend>
+<exec_depend>tf2_ros</exec_depend>
+<exec_depend>semubot_bringup</exec_depend>
