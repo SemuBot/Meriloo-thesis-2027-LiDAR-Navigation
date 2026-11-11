@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 
@@ -14,6 +14,20 @@ def generate_launch_description():
     sllidar = get_package_share_directory('sllidar_ros2')
     slam = get_package_share_directory('slam_toolbox')
     wheelbase = get_package_share_directory(WHEELBASE_PKG)
+
+    # Define the LiDAR include action separately so it can be delayed
+    lidar_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(sllidar, 'launch', 'sllidar_a3_launch.py')),
+        launch_arguments={'serial_baudrate': '256000',
+                          'frame_id': 'laser'}.items()
+    )
+
+    # Delay the lidar startup by 5.0 seconds to prevent heavy startup bottleneck
+    delayed_lidar = TimerAction(
+        period=5.0,
+        actions=[lidar_launch]
+    )
 
     return LaunchDescription([
         # 1. Wheelbase stack
@@ -29,12 +43,8 @@ def generate_launch_description():
              arguments=['--x', '-0.2', '--y', '0', '--z', '0.3',
                         '--frame-id', 'base_link', '--child-frame-id', 'laser']),
 
-        # 4. Lidar
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(sllidar, 'launch', 'sllidar_a3_launch.py')),
-            launch_arguments={'serial_baudrate': '256000',
-                              'frame_id': 'laser'}.items()),
+        # 4. Lidar (delayed)
+        delayed_lidar,
 
         # 5. SLAM
         IncludeLaunchDescription(
