@@ -26,3 +26,5 @@ Project Outputs*/
 
 # Folder to save each comparison results
 CompareHistory/
+
+*.OutJob
